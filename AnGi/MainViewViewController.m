@@ -1,82 +1,64 @@
 //
-//  AppDelegate.m
+//  MainViewViewController.m
 //  AnGi
 //
 //  Created by DoLH on 8/18/14.
 //  Copyright (c) 2014 Ominext. All rights reserved.
 //
 
-#import "AppDelegate.h"
-
-#import "MasterViewController.h"
 #import "MainViewViewController.h"
+#import "MasterViewController.h"
 
-@implementation AppDelegate
+@interface MainViewViewController ()
+
+@end
+
+@implementation MainViewViewController
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    // Override point for customization after application launch.
-//    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-//    MasterViewController *controller = (MasterViewController *)navigationController ;
-    
-//    NSArray *viewControllers = [navigationController viewControllers];
-//    MasterViewController *controller = [viewControllers objectAtIndex:1];
-    
-//    MasterViewController *controller = [navigationController.viewControllers objectAtIndex:2];
-    
-    /*UIStoryboard *mystoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    MasterViewController *controller = (MasterViewController*)[mystoryboard instantiateViewControllerWithIdentifier:@"master"];
-    
-    controller.managedObjectContext = self.managedObjectContext;*/
-
-    return YES;
-}
-							
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
+- (void)viewDidLoad
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.title = @"";
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application
+- (void)didReceiveMemoryWarning
 {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
+//goMaster
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
-}
-
-- (void)saveContext
-{
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
+    if ([[segue identifier] isEqualToString:@"goMaster"]) {
+        MasterViewController *master = [segue destinationViewController];
+        master.managedObjectContext = self.managedObjectContext;
     }
 }
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
 
 #pragma mark - Core Data stack
 
@@ -124,7 +106,7 @@
         /*
          Replace this implementation with code to handle the error appropriately.
          
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
          
          Typical reasons for an error here include:
          * The persistent store is not accessible;
@@ -146,7 +128,7 @@
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    }    
+    }
     
     return _persistentStoreCoordinator;
 }
@@ -158,5 +140,6 @@
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
 
 @end
